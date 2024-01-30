@@ -4,7 +4,6 @@
 
 #define MAX_TASKS 100
 
-// Structure pour stocker les informations de chaque tâche
 typedef struct {
     int jour;
     int mois;
@@ -17,7 +16,6 @@ struct Tache {
     int priorite;
 };
 
-// Fonction pour ajouter une tâche
 int ajouterTache(struct Tache taches[], int nombreTaches) {
     if (nombreTaches < MAX_TASKS) {
         printf("Entrez la description de la tâche : ");
@@ -36,7 +34,6 @@ int ajouterTache(struct Tache taches[], int nombreTaches) {
     }
 }
 
-// Fonction pour afficher les tâches
 void afficherTache(struct Tache taches[], int nombreTaches) {
     if (nombreTaches == 0) {
         printf("La liste des taches est vide !\n");
@@ -52,7 +49,6 @@ void afficherTache(struct Tache taches[], int nombreTaches) {
     }
 }
 
-// Fonction pour modifier une tâche
 void modifierTache(struct Tache taches[], int nombreTaches) {
     int numeroTache;
     printf("entrez le numero de la tache a modifier:");
@@ -74,25 +70,24 @@ void modifierTache(struct Tache taches[], int nombreTaches) {
     }
 }
 
-// Fonction pour supprimer une tâche
-void SupprimerTache(struct Tache taches[], int *nombreTaches) {
+int supprimerTache(struct Tache taches[], int nombreTaches) {
     int index;
 
     printf("Entrez le numéro de la tâche à supprimer : ");
     scanf("%d", &index);
 
-    if (index >= 1 && index <= *nombreTaches) {
+    if (index >= 1 && index <= nombreTaches) {
         // Décaler les tâches suivantes vers la gauche pour remplir l'emplacement supprimé
-        for (int i = index - 1; i < *nombreTaches - 1; i++) {
+        for (int i = index - 1; i < nombreTaches - 1; i++) {
             taches[i] = taches[i + 1];
         }
 
-        // Décrémentation
-        (*nombreTaches)--;
+        // Décrémentation et retourne le nouveau nombre de tâches
+        return nombreTaches - 1;
 
-        printf("La tâche a été supprimée.\n");
     } else {
         printf("Numéro de tâche invalide.\n");
+        return nombreTaches;
     }
 }
 
@@ -123,7 +118,7 @@ int main() {
             modifierTache(taches, nombreTaches);
             break;
         case 4:
-            SupprimerTache(taches, &nombreTaches);
+            nombreTaches = supprimerTache(taches, nombreTaches);
             break;
         case 5:
             printf("Au revoir!\n");

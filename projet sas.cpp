@@ -72,7 +72,7 @@ void afficherTache(struct Tache taches[], int nombreTaches) {
 	}
 }
 // Fonction pour supprimer une tâche
-void SupprimerTache(struct Tache taches[], int nombreTaches) {
+int supprimerTache(struct Tache taches[], int nombreTaches) {
     int index;
 
     printf("Entrez le numéro de la tâche à supprimer : ");
@@ -84,12 +84,12 @@ void SupprimerTache(struct Tache taches[], int nombreTaches) {
             taches[i] = taches[i + 1];
         }
 
-        // Décrémentation
-        (nombreTaches)--;
+        // Décrémentation et retourne le nouveau nombre de tâches
+        return nombreTaches - 1;
 
-        printf("La tâche a été supprimée.\n");
     } else {
         printf("Numéro de tâche invalide.\n");
+        return nombreTaches;
     }
 }
 
@@ -122,7 +122,7 @@ void SupprimerTache(struct Tache taches[], int nombreTaches) {
 				  modifierTache(taches, nombreTaches);
 			 	 break;
 		 	 case 4:
-				SupprimerTache(taches, nombreTaches);
+				supprimerTache(taches, nombreTaches);
 			 	 break;
 		 	 case 5:
 				printf("Au revoir!\n");
