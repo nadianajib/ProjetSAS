@@ -1,9 +1,13 @@
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+
 
 #define MAX_TASKS 100
 
+
+// Structure pour stocker les informations de chaque tâche
+//DECLARATION  & REATION DES STRUCTURES
 typedef struct {
     int jour;
     int mois;
@@ -15,26 +19,28 @@ struct Tache {
     char dateEcheance[30];
     int priorite;
 };
+// Fonction pour ajouter une  tâche
 
 int ajouterTache(struct Tache taches[], int nombreTaches) {
     if (nombreTaches < MAX_TASKS) {
-        printf("Entrez la description de la tâche : ");
+        printf("Entrez la description de la tache : ");
         scanf("%s", taches[nombreTaches].Description);
 
-        printf("Entrez la date d'échéance de la tâche : ");
+        printf("Entrez la date d'echeance de la tache : ");
         scanf("%s", taches[nombreTaches].dateEcheance);
 
-        printf("Entrez la priorité de la tâche (1 - Faible, 2 - Moyenne, 3 - Elevee) : ");
+        printf("Entrez la priorite de la tache (1 - Faible, 2 - Moyenne, 3 - Elevee) : ");
         scanf("%d", &taches[nombreTaches].priorite);
 
         return nombreTaches + 1;  // Retourne le nouveau nombre de tâches
     } else {
-        printf("Impossible d'ajouter plus de tâches, la limite est atteinte.\n");
+        printf("Impossible d'ajouter plus de taches, la limite est atteinte.\n");
         return nombreTaches;
     }
 }
+//Fonction pour afficher une tache
 
-void afficherTache(struct Tache taches[], int nombreTaches) {
+void afficherTache( Tache taches[], int nombreTaches) {
     if (nombreTaches == 0) {
         printf("La liste des taches est vide !\n");
     } else {
@@ -46,8 +52,10 @@ void afficherTache(struct Tache taches[], int nombreTaches) {
             printf("la priorite: %d\n", taches[i].priorite);
             printf("\n");
         }
+        
     }
 }
+//Fonction pour modifier une tache
 
 void modifierTache(struct Tache taches[], int nombreTaches) {
     int numeroTache;
@@ -66,14 +74,15 @@ void modifierTache(struct Tache taches[], int nombreTaches) {
         printf("la tache a ete modifiee avec succes.\n");
 
     } else {
-        printf("Numéro de tache invalide.\n");
+        printf("Numero de tache invalide.\n");
     }
 }
 
+// Fonction pour supprimer une tâche
 int supprimerTache(struct Tache taches[], int nombreTaches) {
     int index;
 
-    printf("Entrez le numéro de la tâche à supprimer : ");
+    printf("Entrez le numero de la tache a supprimer : ");
     scanf("%d", &index);
 
     if (index >= 1 && index <= nombreTaches) {
@@ -86,11 +95,25 @@ int supprimerTache(struct Tache taches[], int nombreTaches) {
         return nombreTaches - 1;
 
     } else {
-        printf("Numéro de tâche invalide.\n");
+        printf("Numero de tache invalide.\n");
         return nombreTaches;
     }
 }
 
+// Fonction pour filtrer une tâche
+void filtrerTachesParPriorite(Tache taches[], int nombreTaches,int priorite) {
+    printf("Taches avec priorite %d:\n", priorite);
+
+    for (int i = 0; i < nombreTaches; i++) {
+        if (taches[i].priorite == priorite) {
+            printf("Tache %d:\n", i + 1);
+            printf("la Description: %s\n", taches[i].Description);
+            printf("la dateEcheance: %s\n", taches[i].dateEcheance);
+            printf("la priorite: %d\n", taches[i].priorite);
+            printf("\n");
+        }
+    }
+}
 int main() {
     struct Tache taches[MAX_TASKS];
     int nombreTaches = 0;
@@ -100,10 +123,11 @@ int main() {
         // Menu principal:
         printf("         Menu: \n \n");
         printf("1. Ajouter une tache.\n");
-        printf("2. Afficher les taches.\n");
+        printf("2. Afficher une tache.\n");
         printf("3. Modifier une tache.\n");
         printf("4. Supprimer une tache.\n");
-        printf("5. Quitter.\n");
+        printf("5.Filtrer une tache.\n");
+        printf("6. Quitter.\n");
         printf("Entrez votre choix : ");
         scanf("%d", &choix);
 
@@ -116,19 +140,27 @@ int main() {
             break;
         case 3:
             modifierTache(taches, nombreTaches);
+           
             break;
         case 4:
             nombreTaches = supprimerTache(taches, nombreTaches);
             break;
         case 5:
+        int priorite;
+            printf("Entrez la priorite pour filtrer : ");
+            scanf("%d", &priorite);
+            filtrerTachesParPriorite(taches, nombreTaches, priorite);
+            break;
+        case 6:
             printf("Au revoir!\n");
             break;
         default:
             printf("Votre choix est invalide, veuillez ressayer.\n");
             break;
         }
-    } while (choix != 5);
+    } while (choix != 6);
 
     return 0;
 }
+
 
